@@ -5,6 +5,10 @@ Created on 06/09/2017 9:50 AM
 
 @author: Tangrizzly
 """
+# best result:
+# rse_train = 57372.4818287
+# rse_test = 21230.4729627
+# more loops will lead to overfitting
 
 import numpy as np
 
@@ -55,11 +59,6 @@ for i in range(0, 19):
             rui_hat = avg + bi[b][0] + bu[0][a] + np.dot(qi[:, b].T, pu[:, a])
             rse_test += np.square(rui[2]-rui_hat) + lmd*(np.square(bi[b][0])+np.square(np.linalg.norm(qi[:, b]))+np.square(np.linalg.norm(pu[:, a])))
     print rse_test
-
-# best result: 
-# rse_train = 57372.4818287
-# rse_test = 21230.4729627
-# more loops will lead to overfitting
 
 for rui in test_orgi:
     a = int(rui[0])

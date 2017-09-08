@@ -5,6 +5,10 @@ Created on 06/09/2017 6:05 PM
 
 @author: Tangrizzly
 """
+# best result: 27*1000 times bootstrap sampling
+# train 346462.827393
+# test 88397.3271923
+
 import numpy as np
 
 
@@ -53,20 +57,30 @@ it = int(np.max(train_orgi[:, 1])+1)
 avg = np.average(train_orgi[:, 2])
 
 # initialization
+np.random.seed(7)
 f = 20
 gm = 0.005
 lmd = 0.02
 W = np.random.rand(us, f)
 H = np.random.rand(it, f)
-for b in range(0, 50):
+for b in range(0, 27):
     for a in range(0, 1000):
         u = np.random.choice(train_orgi[:, 0], 1)[0]
         [i, j] = np.random.choice(train_orgi[:, 1], 2)
         update(W[int(u), :], H[int(i), :], H[int(j), :], gm, lmd)
     print rse_train()
     print rse_test()
+    print b
 
+X = np.dot(W, H.T)
+for rui in test_orgi:
+    a = int(rui[0])
+    b = int(rui[1])
+    if b >= 1680:
+        rui_hat=avg
+    else:
+        rui_hat = X[a, b]
+    rui[3] = rui_hat
+    print rui
 
-# best result: 34*1000 times bootstrap sampling
-# train 358435.052103
-# test 87530.4892336
+np.savetxt('bpr_result', test_orgi, fmt='%.2f')
