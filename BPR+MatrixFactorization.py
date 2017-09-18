@@ -63,7 +63,7 @@ gm = 0.005
 lmd = 0.02
 W = np.random.rand(us, f)
 H = np.random.rand(it, f)
-for b in range(0, 27):
+for b in range(0, 50):
     for a in range(0, 1000):
         u = np.random.choice(train_orgi[:, 0], 1)[0]
         [i, j] = np.random.choice(train_orgi[:, 1], 2)
@@ -81,6 +81,5 @@ for rui in test_orgi:
     else:
         rui_hat = X[a, b]
     rui[3] = rui_hat
-    print rui
 
 np.savetxt('bpr_result', test_orgi, fmt='%.2f')
